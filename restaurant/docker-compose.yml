@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "" # Şifre yok
+      MYSQL_DATABASE: restaurant-web-app # Kullanmak istediğiniz veritabanı ismi
+      MYSQL_USER: baturay # Kullanıcı adı
+      MYSQL_PASSWORD: "" # Şifre yok
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./database_dump.sql:/docker-entrypoint-initdb.d/restaurant-web-app.sql
+    networks:
+      - app-network
+
+volumes:
+  db_data:
+
+networks:
+  app-network:
