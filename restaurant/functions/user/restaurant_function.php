@@ -1,6 +1,3 @@
-
-
-
 <?php
 
 function get_restaurant_info()

@@ -1,15 +1,16 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 include('../../config/dbcon.php');
 include('../../functions/user/basket_function.php');
-session_start();
+
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_SESSION['user_id'])) {
         $user_id = $_SESSION['user_id'];
 
-        // Formdan gelen veriler
         $food_id = isset($_POST['food_id']) ? $_POST['food_id'] : null;
         $restaurant_id = isset($_POST['restaurant_id']) ? $_POST['restaurant_id'] : null;
         $action = isset($_POST['action']) ? $_POST['action'] : null;
@@ -41,8 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
 } else {
-    // Geçersiz istek
-    echo "Geçersiz istek.";
     header('Location: ../../test.php');
     exit();
 }

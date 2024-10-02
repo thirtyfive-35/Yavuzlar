@@ -1,13 +1,14 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 include('../../config/dbcon.php');
 include('../../functions/user/basket_function.php');
-session_start();
+
 
 if (isset($_POST['submit'])) {
     $user_id = $_SESSION['user_id'];
-    echo $user_id;
 
     // Formdan gelen diğer veriler
     $product_id = $_POST['product_id'];
@@ -25,7 +26,7 @@ if (isset($_POST['submit'])) {
         header('Location: ../../test.php');
     }
 } else {
-    echo "Geçersiz istek.";
     header('Location: test.php');
     exit();
 }
+?>

@@ -1,4 +1,3 @@
-
 <?php
 
 function get_restaurant_name_and_id()

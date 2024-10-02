@@ -1,4 +1,3 @@
-
 <?php
 
 function get_food_detail($restaurant_id)

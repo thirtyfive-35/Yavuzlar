@@ -73,9 +73,13 @@
                 </button>
                 <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                     <div class="navbar-nav mx-auto">
-                        <a href="index.html" class="nav-item nav-link active">Home</a>
+                        <a href="index.php" class="nav-item nav-link active">Home</a>
                         <a href="shop.php" class="nav-item nav-link">Shop</a>
-                        <a href="shop-detail.html" class="nav-item nav-link">Shop Detail</a>
+                        <?php if (isset($_SESSION['auth'])): ?>
+                            <a href="controller/logout.php" class="dropdown-item">Logout</a>
+                        <?php else: ?>
+                            <a href="login.php" class="nav-item nav-link">Login</a>
+                        <?php endif; ?>
                         <div class="nav-item dropdown">
                             <a
                                 href="#"
@@ -91,7 +95,7 @@
                                 <a href="controller/logout.php" class="dropdown-item">Logout</a>
                             </div>
                         </div>
-                        <a href="contact.html" class="nav-item nav-link">Contact</a>
+                        <a href="register.php" class="nav-item nav-link">Register</a>
                     </div>
                     <div class="d-flex m-3 me-0">
                         <button

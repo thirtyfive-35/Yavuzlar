@@ -1,6 +1,9 @@
-
 <?php
-session_start();
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 include '../config/dbcon.php';
 include '../functions/authcode.php'; // authcode.php dosyasını dahil et
 
@@ -16,7 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // register fonksiyonunu çağır
     register($name, $surname, $username, $password, $role);
 } else {
-    echo "Geçersiz istek.";
     header('Location: ../register.php');
 }
 ?>

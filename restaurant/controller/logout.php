@@ -1,7 +1,8 @@
-
 <?php
-// Oturumu başlat
-session_start();
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Tüm oturum verilerini temizle
 $_SESSION = array();
@@ -26,4 +27,5 @@ session_destroy();
 // Kullanıcıyı giriş sayfasına veya başka bir sayfaya yönlendirme
 header("Location: ../login.php");
 exit();
+
 ?>

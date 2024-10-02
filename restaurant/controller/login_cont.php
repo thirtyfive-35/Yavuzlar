@@ -1,6 +1,9 @@
-
 <?php
-session_start();
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 include '../config/dbcon.php';
 include '../functions/authcode.php'; // authcode.php dosyasını dahil et
 
@@ -38,4 +41,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     echo "Geçersiz istek.";
     header('Location: ../login.php');
 }
+
 ?>

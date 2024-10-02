@@ -1,7 +1,11 @@
 <?php
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 include('../../config/dbcon.php');
 include('../../functions/user/food_function.php');
-session_start();
+
 
 if (isset($_POST['submit'])) {
     $user_id = $_SESSION['user_id'];
@@ -24,7 +28,6 @@ if (isset($_POST['submit'])) {
         header('Location: ../../restaurant_goruntule.php');
     }
 } else {
-    echo "Geçersiz istek.";
     header('Location: ../../restaurant_goruntule.php');
     exit();
 }

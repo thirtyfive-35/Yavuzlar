@@ -1,4 +1,3 @@
-
 <?php
 
 include('redirect.php');

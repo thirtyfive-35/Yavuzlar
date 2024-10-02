@@ -1,4 +1,3 @@
-
 <?php
 
 function add_basket($food_id, $user_id)

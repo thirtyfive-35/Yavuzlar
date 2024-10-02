@@ -17,7 +17,7 @@ $results = search_user($name, $surname, $active);
 <div class="container">
     <div class="container mt-5">
         <h2 class="text-center">Müşteri Arama Paneli</h2>
-        <form method="GET" action="musteri_cont.php" class="d-flex justify-content-center mt-4">
+        <form method="GET" action="musteri_ara_cont.php" class="d-flex justify-content-center mt-4">
             <input type="text" name="name" class="form-control me-2" placeholder="Ad" aria-label="Ad" value="<?php echo $name; ?>">
             <input type="text" name="surname" class="form-control me-2" placeholder="Soyad" aria-label="Soyad" value="<?php echo $surname; ?>">
             <div class="form-check me-2">

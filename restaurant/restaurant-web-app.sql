@@ -3,16 +3,13 @@
 -- https://www.phpmyadmin.net/
 --
 -- Anamakine: 127.0.0.1
--- Üretim Zamanı: 28 Eyl 2024, 21:10:24
+-- Üretim Zamanı: 02 Eki 2024, 03:11:51
 -- Sunucu sürümü: 10.4.32-MariaDB
 -- PHP Sürümü: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
-
-CREATE DATABASE IF NOT EXISTS `restaurant-web-app`;
-USE `restaurant-web-app`;
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -38,14 +35,6 @@ CREATE TABLE `basket` (
   `quantity` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Tablo döküm verisi `basket`
---
-
-INSERT INTO `basket` (`id`, `user_id`, `food_id`, `note`, `quantity`, `created_at`) VALUES
-(1, 3, 1, NULL, 1, '2024-09-28 15:46:49'),
-(5, 3, 2, NULL, 4, '2024-09-28 15:51:30');
 
 -- --------------------------------------------------------
 
@@ -74,7 +63,8 @@ INSERT INTO `comments` (`id`, `user_id`, `restaurant_id`, `surname`, `title`, `d
 (2, 3, 1, 'oktay', 'Çok kötü', 'Köftesi Mükkemmel. Tam istediğim gibi fiyatı da aşırı ucuz.2', 2.00, '2024-09-28 12:36:17', '2024-09-28 12:36:17'),
 (4, 3, 1, 'asdas', 'asd', 'dasd', 3.00, '2024-09-28 12:37:55', '2024-09-28 12:37:55'),
 (6, NULL, 1, 'baturay', 'test etst', 'test35', 4.00, '2024-09-28 15:30:08', '2024-09-28 15:30:08'),
-(7, 3, 1, 'test33535', 'test3535', 'test test ', 4.00, '2024-09-28 15:52:09', '2024-09-28 15:52:09');
+(7, 3, 1, 'test33535', 'test3535', 'test test ', 4.00, '2024-09-28 15:52:09', '2024-09-28 15:52:09'),
+(8, 3, 1, 'sondeneme', 'sondemene', 'asdasd', 5.00, '2024-10-01 22:23:38', '2024-10-01 22:23:38');
 
 -- --------------------------------------------------------
 
@@ -153,15 +143,25 @@ INSERT INTO `food` (`id`, `restaurant_id`, `name`, `description`, `image_path`, 
 -- --------------------------------------------------------
 
 --
--- Tablo için tablo yapısı `order`
+-- Tablo için tablo yapısı `orders`
 --
 
-CREATE TABLE `order` (
+CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
   `order_status` varchar(50) DEFAULT NULL,
   `total_price` decimal(10,2) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `user_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Tablo döküm verisi `orders`
+--
+
+INSERT INTO `orders` (`id`, `order_status`, `total_price`, `created_at`, `user_id`) VALUES
+(1, 'hazırlanıyor', 1300.00, '2024-10-01 01:27:31', 3),
+(2, 'hazırlanıyor', 400.00, '2024-10-01 01:39:07', 3),
+(3, 'hazırlanıyor', 750.00, '2024-10-01 22:27:22', 3);
 
 -- --------------------------------------------------------
 
@@ -176,6 +176,17 @@ CREATE TABLE `order_items` (
   `quantity` int(11) DEFAULT NULL,
   `price` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Tablo döküm verisi `order_items`
+--
+
+INSERT INTO `order_items` (`id`, `food_id`, `order_id`, `quantity`, `price`) VALUES
+(1, 1, 1, 4, 150.00),
+(2, 2, 1, 7, 100.00),
+(3, 2, 2, 2, 100.00),
+(4, 3, 2, 1, 200.00),
+(5, 1, 3, 5, 150.00);
 
 -- --------------------------------------------------------
 
@@ -225,7 +236,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `company_id`, `role`, `name`, `surname`, `username`, `password`, `balance`, `created_at`, `deleted_at`) VALUES
 (2, NULL, 'admin', 'baturay', 'incekara', 'baturay35', '$argon2id$v=19$m=65536,t=4,p=1$YnZKSkZVYnFHTmNxU2dDSw$alSmHD0c6GYMmLkeuwhLwbQD4ifXmOrdMooyzSxttvg', 5000.00, '2024-09-19 21:43:27', NULL),
-(3, NULL, 'user', 'sezen melis', 'oktay', 'sezen35', '$argon2id$v=19$m=65536,t=4,p=1$bGxoSlRSV1doT0xyYUlBNA$YoDegqA86Sel7A9Auq1QdeP1g/gTWEOez4OMlIDgWx4', 5000.00, '2024-09-19 21:46:23', '2024-09-24 23:04:53'),
+(3, NULL, 'user', 'sezen melis', 'oktay', 'sezen35', '$argon2id$v=19$m=65536,t=4,p=1$bGxoSlRSV1doT0xyYUlBNA$YoDegqA86Sel7A9Auq1QdeP1g/gTWEOez4OMlIDgWx4', 2550.00, '2024-09-19 21:46:23', '2024-09-24 23:04:53'),
 (4, 2, 'firma', 'baturay', 'incekara', 'baturay12', '$argon2id$v=19$m=65536,t=4,p=1$NlQyaXRnV2cwaUwzdkF0bQ$ymcQv+DurthT/o5OjsiDOV+bVZClzVMhywZzIZ+cZxU', 5000.00, '2024-09-19 22:56:56', NULL),
 (5, 1, 'firma', 'yusuf', 'köfteci', 'köfteci35', '$argon2id$v=19$m=65536,t=4,p=1$bE8xR2tEdXhxV3kuYUhvWA$Zk3A8wdyBOHJ43YEdKKTG1SaNgfE0R05gTi+caEXnS0', 5000.00, '2024-09-19 23:25:55', NULL),
 (6, NULL, 'user', 'baturay', 'ince', 'baturay3535', '$argon2id$v=19$m=65536,t=4,p=1$alRpaVE4S3RraVFpT0IvVg$plAKsNubSbN0Sbfgv5YaUMmKdSu2oe/uwas/EGoGFHQ', 5000.00, '2024-09-24 21:21:51', NULL),
@@ -277,10 +288,11 @@ ALTER TABLE `food`
   ADD KEY `restaurant_id` (`restaurant_id`);
 
 --
--- Tablo için indeksler `order`
+-- Tablo için indeksler `orders`
 --
-ALTER TABLE `order`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_user` (`user_id`);
 
 --
 -- Tablo için indeksler `order_items`
@@ -312,13 +324,13 @@ ALTER TABLE `users`
 -- Tablo için AUTO_INCREMENT değeri `basket`
 --
 ALTER TABLE `basket`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `company`
@@ -339,16 +351,16 @@ ALTER TABLE `food`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- Tablo için AUTO_INCREMENT değeri `order`
+-- Tablo için AUTO_INCREMENT değeri `orders`
 --
-ALTER TABLE `order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `orders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `restaurant`
@@ -393,11 +405,17 @@ ALTER TABLE `food`
   ADD CONSTRAINT `food_ibfk_1` FOREIGN KEY (`restaurant_id`) REFERENCES `restaurant` (`id`);
 
 --
+-- Tablo kısıtlamaları `orders`
+--
+ALTER TABLE `orders`
+  ADD CONSTRAINT `fk_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
 -- Tablo kısıtlamaları `order_items`
 --
 ALTER TABLE `order_items`
   ADD CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`food_id`) REFERENCES `food` (`id`),
-  ADD CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `order` (`id`);
+  ADD CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`);
 
 --
 -- Tablo kısıtlamaları `restaurant`

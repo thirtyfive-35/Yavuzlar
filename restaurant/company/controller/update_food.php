@@ -1,5 +1,5 @@
-
 <?php
+
 session_start();
 include('../../config/dbcon.php');
 include('../../functions/company/food_function.php');

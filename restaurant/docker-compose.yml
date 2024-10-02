@@ -2,32 +2,31 @@ version: "3.8"
 
 services:
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
     ports:
-      - "80:80"
+      - "8080:80" # Port çakışmalarını önlemek için değiştirin
+    volumes:
+      - .:/var/www/html
     depends_on:
       - db
-    networks:
-      - app-network
 
   db:
-    image: mysql:5.7
-    restart: always
+    image: mysql:8.0 # Belirli bir sürüm kullanın
     environment:
-      MYSQL_ROOT_PASSWORD: "" # Şifre yok
-      MYSQL_DATABASE: restaurant-web-app # Kullanmak istediğiniz veritabanı ismi
-      MYSQL_USER: baturay # Kullanıcı adı
-      MYSQL_PASSWORD: "" # Şifre yok
+      MYSQL_DATABASE: restaurant-web-app
+      MYSQL_ROOT_PASSWORD: "12345" # Basit bir şifre
+    ports:
+      - "3306:3306"
     volumes:
-      - db_data:/var/lib/mysql
-      - ./database_dump.sql:/docker-entrypoint-initdb.d/restaurant-web-app.sql
-    networks:
-      - app-network
+      - ./restaurant-web-app.sql:/docker-entrypoint-initdb.d/restaurant-web-app.sql # SQL dosyasını ekledik
 
-volumes:
-  db_data:
-
-networks:
-  app-network:
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8081:80" # Port çakışmalarını önlemek için değiştirin
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: "12345" # Aynı şifreyi buraya da ekleyin
+    depends_on:
+      - db

@@ -1,14 +1,17 @@
-# Temel imaj olarak PHP ve Apache içeren bir imaj kullanın
-FROM php:8.1-apache
+# PHP 8.0 ve Apache içeren resmi Docker imajını kullan
+FROM php:8.0-apache
 
-# Gerekli uzantıları yükleyin (örneğin, PDO)
+# Çalışma dizini ayarlama
+WORKDIR /var/www/html
+
+# Proje dosyalarınızı kopyalama
+COPY . .
+
+# Gerekli uzantıları yükleyin
 RUN docker-php-ext-install pdo pdo_mysql
 
-# Proje dosyalarınızı konteyner içine kopyalayın
-COPY . /var/www/html/
-
-# Apache yapılandırma dosyasını ayarlayın (isteğe bağlı)
-# COPY ./my-apache-config.conf /etc/apache2/sites-available/000-default.conf
+# Apache ayarlarını yapılandırma (isteğe bağlı)
+# COPY ./your-apache-config.conf /etc/apache2/sites-available/000-default.conf
 
 # Apache'yi başlat
 CMD ["apache2-foreground"]

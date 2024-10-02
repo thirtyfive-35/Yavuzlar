@@ -1,4 +1,3 @@
-
 <?php
 
 function add_cupon($name, $discount, $restaurant_id)

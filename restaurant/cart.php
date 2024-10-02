@@ -1,11 +1,16 @@
 <?php
 
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+include('middleware/userMiddleware.php');
+include('includes/header.php');
 include('functions/user/basket_function.php'); // Sepet fonksiyonlarını dahil et
 include('config/dbcon.php');
 
-session_start();
+
 $user_id = $_SESSION['user_id'];
-include('includes/header.php');
+
 
 $cart_items = get_basket($user_id); // Sepet verilerini al
 ?>
@@ -24,6 +29,14 @@ $cart_items = get_basket($user_id); // Sepet verilerini al
 <!-- Cart Page Start -->
 <div class="container-fluid py-5">
     <div class="container py-5">
+        <?php if (isset($_SESSION['message'])): ?>
+            <div class="alert alert-info mt-3">
+                <?php
+                echo $_SESSION['message'];
+                unset($_SESSION['message']);
+                ?>
+            </div>
+        <?php endif; ?>
         <div class="table-responsive">
             <table class="table">
                 <thead>
@@ -36,11 +49,11 @@ $cart_items = get_basket($user_id); // Sepet verilerini al
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($cart_items as $item): ?>
+                    <?php foreach ($cart_items as $index => $item): ?>
                         <tr>
                             <th scope="row">
                                 <div class="d-flex align-items-center">
-                                    <img src="img/vegetable-item-3.png" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
+                                    <img src="img/vegetable-item-3.png" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="Product Image">
                                 </div>
                             </th>
                             <td>
@@ -50,27 +63,27 @@ $cart_items = get_basket($user_id); // Sepet verilerini al
                                 <p class="mb-0 mt-4"><?= number_format($item['price'], 2) ?> $</p>
                             </td>
                             <td>
+                                <!-- Her ürün için ayrı bir form ve benzersiz form ID'si -->
                                 <div class="input-group quantity mt-4" style="width: 100px;">
-                                    <form action="controller/basket/update_basket.php" method="POST" class="d-flex align-items-center">
+                                    <!-- Azaltma işlemi -->
+                                    <form id="decrease-form-<?= $index ?>" action="controller/basket/update_basket.php" method="POST" class="d-inline-block">
                                         <input type="hidden" name="food_id" value="<?= htmlspecialchars($item['food_id']) ?>">
                                         <input type="hidden" name="restaurant_id" value="<?= htmlspecialchars($item['restaurant_id']) ?>">
+                                        <button type="button" class="btn btn-sm btn-minus rounded-circle bg-light border" title="Miktarı azalt" onclick="submitForm('decrease-form-<?= $index ?>', 'decrease')">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </form>
 
-                                        <!-- Azaltma Butonu -->
-                                        <div class="input-group-btn me-2">
-                                            <button type="submit" name="action" value="decrease" class="btn btn-sm btn-minus rounded-circle bg-light border" title="Miktarı azalt">
-                                                <i class="fa fa-minus"></i>
-                                            </button>
-                                        </div>
+                                    <!-- Miktar Göstergesi -->
+                                    <input type="text" name="quantity" class="form-control form-control-sm text-center border-0 mx-2" value="<?= htmlspecialchars($item['quantity']) ?>" readonly>
 
-                                        <!-- Miktar Göstergesi -->
-                                        <input type="text" name="quantity" class="form-control form-control-sm text-center border-0" value="<?= htmlspecialchars($item['quantity']) ?>" readonly>
-
-                                        <!-- Arttırma Butonu -->
-                                        <div class="input-group-btn ms-2">
-                                            <button type="submit" name="action" value="increase" class="btn btn-sm btn-plus rounded-circle bg-light border" title="Miktarı artır">
-                                                <i class="fa fa-plus"></i>
-                                            </button>
-                                        </div>
+                                    <!-- Arttırma işlemi -->
+                                    <form id="increase-form-<?= $index ?>" action="controller/basket/update_basket.php" method="POST" class="d-inline-block">
+                                        <input type="hidden" name="food_id" value="<?= htmlspecialchars($item['food_id']) ?>">
+                                        <input type="hidden" name="restaurant_id" value="<?= htmlspecialchars($item['restaurant_id']) ?>">
+                                        <button type="button" class="btn btn-sm btn-plus rounded-circle bg-light border" title="Miktarı artır" onclick="submitForm('increase-form-<?= $index ?>', 'increase')">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
                                     </form>
                                 </div>
                             </td>
@@ -79,7 +92,6 @@ $cart_items = get_basket($user_id); // Sepet verilerini al
                             </td>
                         </tr>
                     <?php endforeach; ?>
-
                 </tbody>
             </table>
         </div>
@@ -111,10 +123,28 @@ $cart_items = get_basket($user_id); // Sepet verilerini al
                 </div>
             </div>
         </div>
+        <!-- Siparişi Öde Butonu -->
+        <div class="p-4 text-end">
+            <a href="checkout.php" class="btn btn-primary">Siparişi Öde</a>
+        </div>
     </div>
+</div>
 </div>
 <!-- Cart Page End -->
 
 <?php
 include('includes/footer.php');
 ?>
+
+<script>
+    // Butona tıklanınca formu gönder
+    function submitForm(formId, action) {
+        const form = document.getElementById(formId);
+        const actionInput = document.createElement('input');
+        actionInput.type = 'hidden';
+        actionInput.name = 'action';
+        actionInput.value = action;
+        form.appendChild(actionInput);
+        form.submit();
+    }
+</script>

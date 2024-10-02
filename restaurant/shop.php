@@ -1,12 +1,15 @@
 <?php
 
-include('functions/user/restaurant_function.php');
-include('config/dbcon.php');
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 include('middleware/userMiddleware.php');
 include('includes/header.php');
+include('functions/user/restaurant_function.php');
+include('config/dbcon.php');
 
-$restaurants = get_restaurant_info(); // username ve id döndürmeli
+
+$restaurants = get_restaurant_info();
 ?>
 
 

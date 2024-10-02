@@ -1,11 +1,15 @@
 <?php
 
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+include('middleware/userMiddleware.php');
+include('includes/header.php');
 include('functions/user/food_function.php');
 include('config/dbcon.php');
-session_start();
-include('middleware/userMiddleware.php');
 
 
+$test = $_SESSION['user_id'];
 
 if (isset($_GET['id'])) {
     $restaurant_id = $_GET['id'];
@@ -15,9 +19,8 @@ if (isset($_GET['id'])) {
     header("Location: shop.php");
     exit();
 }
-include('includes/header.php');
 
-$test = $_SESSION['user_id'];
+
 
 ?>
 
