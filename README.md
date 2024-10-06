@@ -13,5 +13,9 @@ restaurant_app:
 admin username : baturay35
 password : 1234
 
-docker'a atmayı başaramadım.
+company user: alperen35
+password: 1234
+
+user user: sezen35
+password: 1234
 
