@@ -23,7 +23,7 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     ports:
-      - "8081:80" # Port çakışmalarını önlemek için değiştirin
+      - "8082:80" # Port çakışmalarını önlemek için değiştirin
     environment:
       PMA_HOST: db
       PMA_USER: root

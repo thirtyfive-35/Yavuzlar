@@ -25,6 +25,8 @@ $results = get_restaurant_detail();
                         <th>Açıklama</th>
                         <th>Fiyat</th>
                         <th>İndirim</th>
+                        <th>Sil</th>
+                        <th>indirim</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,6 +40,12 @@ $results = get_restaurant_detail();
                                     <td>{$row['description']}</td>
                                     <td>{$row['price']}</td>
                                     <td>{$row['discount']}</td>
+                                    <td>
+                                        <a href='controller/delete_yemek.php?id={$row['food_id']}' class='btn btn-danger' onclick='return confirm(\"Bu yemeği silmek istediğinize emin misiniz?\");'>Sil</a>
+                                    </td>
+                                    <td>
+                                        <a href='indirim_yemek_ekle.php?id={$row['food_id']}' class='btn btn-danger' onclick='return confirm(\"Bu yemeği indirim eklensin mi?\");'>Ekle</a>
+                                    </td>
                                 </tr>";
                         }
                     } else {

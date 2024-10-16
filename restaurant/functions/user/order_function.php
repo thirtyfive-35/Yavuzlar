@@ -109,6 +109,23 @@ function order($user_id, $note = null)
     }
 }
 
+function getOrders($user_id) {
+
+    global $conn;
+    $sql = "SELECT id, order_status, total_price, created_at,user_id
+            FROM orders WHERE user_id = :user_id
+            ORDER BY created_at DESC";
+
+    // PDO kullanarak sorguyu hazırlama
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':user_id', $user_id);
+    $stmt->execute();
+
+    // Sonuçları döndürme
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
 
 
 

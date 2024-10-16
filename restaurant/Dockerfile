@@ -10,8 +10,11 @@ COPY . .
 # Gerekli uzantıları yükleyin
 RUN docker-php-ext-install pdo pdo_mysql
 
-# Apache ayarlarını yapılandırma (isteğe bağlı)
-# COPY ./your-apache-config.conf /etc/apache2/sites-available/000-default.conf
+RUN chown -R www-data:www-data /var/www/html
+
+RUN mkdir -p /var/www/html/uploads/company_logos
+
+RUN chown -R www-data:www-data /var/www/html/uploads
 
 # Apache'yi başlat
 CMD ["apache2-foreground"]

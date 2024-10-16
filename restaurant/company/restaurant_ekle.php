@@ -1,17 +1,15 @@
 <?php
 include('includes/header.php');
-include('../functions/admin/restaurant_function.php');
+include('../functions/company/restaurant_function.php');
 include('../config/dbcon.php');
 
-
-$names=get_restaurant_name_and_id();
 ?>
 
 <div class="container mt-5">
-    <h2 class="text-center">Yemek Ekle</h2>
+    <h2 class="text-center">Restaurant Ekle</h2>
 
     <!-- Form -->
-    <form action="controller/add_food.php" method="POST" enctype="multipart/form-data">
+    <form action="controller/add_restaurant.php" method="POST" enctype="multipart/form-data">
         <div class="row">
 
             <!-- Name -->
@@ -27,23 +25,10 @@ $names=get_restaurant_name_and_id();
             <textarea class="form-control" id="description" name="description" rows="1" placeholder="Açıklama girin" required></textarea>
         </div>
 
-        <!-- Fiyat -->
+        <!-- Dosya Yükleme -->
         <div class="mb-3">
-            <label for="fiyat" class="form-label">Fiyat</label>
-            <textarea class="form-control" id="price" name="price"  placeholder="Fiyatı girin" required></textarea>
-        </div>
-
-        <!-- Name Dropdown -->
-        <div class="mb-3">
-            <label for="restaurant_id" class="form-label">Restorant Seç</label>
-            <select class="form-control" id="restaurant_id" name="restaurant_id" required>
-                <option value="" disabled selected>Restorant Seçin</option>
-                <?php foreach ($names as $name): ?>
-                    <option value="<?php echo $name['id']; ?>">
-                        <?php echo $name['name']; ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
+            <label for="food_image" class="form-label">Yemek Görseli Yükle</label>
+            <input type="file" class="form-control" id="food_image" name="food_image" required>
         </div>
 
         <!-- Submit Button -->

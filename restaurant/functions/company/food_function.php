@@ -139,4 +139,27 @@ function search_food($name, $active)
     return $results;
 }
 
+function add_discount($id, $discount)
+{
+    global $conn;
+
+    // SQL sorgusu
+    $sql = "UPDATE food SET discount = :discount WHERE id = :id";
+
+    // Hazırlanmış ifade (Prepared Statement) kullanımı
+    $stmt = $conn->prepare($sql);
+    
+    // Parametreleri bağlama
+    $stmt->bindParam(':discount', $discount, PDO::PARAM_INT);
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+    // Sorguyu çalıştırma
+    if($stmt->execute()) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
 ?>

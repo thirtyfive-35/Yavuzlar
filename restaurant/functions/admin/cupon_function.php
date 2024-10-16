@@ -45,4 +45,27 @@ function delete_cupon($id)
     $stmt->execute();
 }
 
+function update_cupon($id, $name, $discount, $restaurant_id)
+{
+    global $conn;
+
+    // Güncelleme sorgusu
+    $sql = "UPDATE cupon SET name = :name, discount = :discount, restaurant_id = :restaurant_id WHERE id = :id";
+    $stmt = $conn->prepare($sql);
+
+    // Parametreleri bağlama
+    $stmt->bindParam(':id', $id);
+    $stmt->bindParam(':name', $name);
+    $stmt->bindParam(':discount', $discount);
+    $stmt->bindParam(':restaurant_id', $restaurant_id);
+
+    // Sorguyu çalıştırma
+    if ($stmt->execute()) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
 ?>

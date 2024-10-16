@@ -20,7 +20,8 @@ $results = get_cupon();
                         <th>Kupon Kodu</th>
                         <th>Kupon Değeri</th>
                         <th>Restoran ID</th>
-                        <th>İşlem</th>
+                        <th>Sil</th>
+                        <th>Güncelle</th>
                         <th>Silinme Tarihi</th>
                     </tr>
                 </thead>
@@ -35,6 +36,9 @@ $results = get_cupon();
                                     <td>{$row['restaurant_id']}</td>
                                     <td>
                                         <a href='controller/delete_cupon.php?id={$row['id']}' class='btn btn-danger' onclick='return confirm(\"Bu kuponu silmek istediğinize emin misiniz?\");'>Sil</a>
+                                    </td>
+                                    <td>
+                                        <a href='kupon_guncelle.php?id={$row['id']}' class='btn btn-danger' onclick='return confirm(\"Bu kuponu Güncellemek istediğinize emin misiniz?\");'>Güncelle</a>
                                     </td>
                                     <td>{$row['deleted_at']}</td>
                                   </tr>";

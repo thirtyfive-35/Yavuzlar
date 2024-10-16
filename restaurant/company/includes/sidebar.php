@@ -38,6 +38,29 @@
                                 <span class="nav-link-text ms-1">Yemek Arama</span>
                             </a>
                         </li>
+                        
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" data-bs-toggle="collapse" href="#couponManagement" role="button" aria-expanded="false" aria-controls="couponManagement">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="material-icons opacity-10">redeem</i> <!-- Kupon simgesi -->
+                    </div>
+                    <span class="nav-link-text ms-1">Restaurant Yönetimi</span>
+                </a>
+                <div class="collapse" id="couponManagement">
+                    <ul class="nav ms-4">
+                    <li class="nav-item">
+                            <a class="nav-link text-white" href="company_restaurants.php">
+                                <span class="nav-link-text ms-1">Restarant Listele</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="company_add_restaurant.php">
+                                <span class="nav-link-text ms-1">Restarant Ekle</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </li>

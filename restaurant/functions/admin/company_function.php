@@ -87,7 +87,7 @@ function get_restaurant_detail()
 {
     global $conn;
 
-    $sql = "SELECT c.name AS company_name, r.name AS restaurant_name, f.name AS food_name, f.description, f.price, f.discount 
+    $sql = "SELECT c.name AS company_name, r.name AS restaurant_name, f.name AS food_name, f.id AS food_id,f.description, f.price, f.discount 
             FROM company c 
             INNER JOIN restaurant r ON c.id = r.company_id 
             INNER JOIN food f ON r.id = f.restaurant_id";

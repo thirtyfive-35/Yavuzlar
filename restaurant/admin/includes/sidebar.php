@@ -87,7 +87,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" href="kupon_sil.php">
-                                <span class="nav-link-text ms-1">Kupon Sil</span>
+                                <span class="nav-link-text ms-1">Kupon Listele</span>
                             </a>
                         </li>
                     </ul>
